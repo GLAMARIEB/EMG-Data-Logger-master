@@ -57,6 +57,13 @@
             this.ARDisconnect = new System.Windows.Forms.Button();
             this.ARConnect = new System.Windows.Forms.Button();
             this.serialPort2 = new System.IO.Ports.SerialPort(this.components);
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.PredictionBox.SuspendLayout();
@@ -263,18 +270,25 @@
             // 
             // PredictionBox
             // 
+            this.PredictionBox.Controls.Add(this.label13);
+            this.PredictionBox.Controls.Add(this.label12);
+            this.PredictionBox.Controls.Add(this.label11);
+            this.PredictionBox.Controls.Add(this.label10);
+            this.PredictionBox.Controls.Add(this.label9);
+            this.PredictionBox.Controls.Add(this.label8);
+            this.PredictionBox.Controls.Add(this.label7);
             this.PredictionBox.Controls.Add(this.StartButton);
             this.PredictionBox.Controls.Add(this.Pdata);
             this.PredictionBox.Location = new System.Drawing.Point(35, 449);
             this.PredictionBox.Name = "PredictionBox";
-            this.PredictionBox.Size = new System.Drawing.Size(539, 285);
+            this.PredictionBox.Size = new System.Drawing.Size(594, 285);
             this.PredictionBox.TabIndex = 5;
             this.PredictionBox.TabStop = false;
             this.PredictionBox.Text = "Prediction";
             // 
             // StartButton
             // 
-            this.StartButton.Location = new System.Drawing.Point(391, 40);
+            this.StartButton.Location = new System.Drawing.Point(378, 31);
             this.StartButton.Name = "StartButton";
             this.StartButton.Size = new System.Drawing.Size(116, 50);
             this.StartButton.TabIndex = 1;
@@ -297,9 +311,9 @@
             this.groupBox4.Controls.Add(this.comboBox3);
             this.groupBox4.Controls.Add(this.ARDisconnect);
             this.groupBox4.Controls.Add(this.ARConnect);
-            this.groupBox4.Location = new System.Drawing.Point(580, 449);
+            this.groupBox4.Location = new System.Drawing.Point(635, 449);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(339, 285);
+            this.groupBox4.Size = new System.Drawing.Size(438, 285);
             this.groupBox4.TabIndex = 6;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Connect to Arduino";
@@ -344,6 +358,76 @@
             this.ARConnect.Text = "Connect";
             this.ARConnect.UseVisualStyleBackColor = true;
             this.ARConnect.Click += new System.EventHandler(this.ARConnect_Click);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.label7.Location = new System.Drawing.Point(374, 96);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(66, 20);
+            this.label7.TabIndex = 2;
+            this.label7.Text = "1 = Fist";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.label8.Location = new System.Drawing.Point(374, 116);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(73, 20);
+            this.label8.TabIndex = 3;
+            this.label8.Text = "2 = Rest";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.label9.Location = new System.Drawing.Point(375, 136);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(119, 20);
+            this.label9.TabIndex = 4;
+            this.label9.Text = "3 = Open hand";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.label10.Location = new System.Drawing.Point(375, 158);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(98, 20);
+            this.label10.TabIndex = 5;
+            this.label10.Text = "4 = Wave In";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.label11.Location = new System.Drawing.Point(375, 175);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(112, 20);
+            this.label11.TabIndex = 6;
+            this.label11.Text = "5 = Wave Out";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.label12.Location = new System.Drawing.Point(375, 192);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(76, 20);
+            this.label12.TabIndex = 7;
+            this.label12.Text = "6 = Point";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.label13.Location = new System.Drawing.Point(375, 212);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(76, 20);
+            this.label13.TabIndex = 8;
+            this.label13.Text = "7 = Okay";
             // 
             // Form1
             // 
@@ -401,6 +485,13 @@
         private System.Windows.Forms.ComboBox comboBox4;
         private System.Windows.Forms.ComboBox comboBox3;
         private System.IO.Ports.SerialPort serialPort2;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label7;
     }
 }
 

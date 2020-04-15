@@ -11,6 +11,7 @@ using System.IO;
 using System.IO.Ports;
 using System.Timers;
 
+
 namespace EMG_Logger
 {
     public partial class Form1 : Form
@@ -21,11 +22,13 @@ namespace EMG_Logger
 
         StreamWriter sw;
         bool logging_data = false;
+        bool recieve_data = false;
         string temp = null;
         string in_data;
         string outdata;
-        
-        
+       
+
+
 
         int _hours = 0;
         int _minutes = 0;
@@ -44,6 +47,7 @@ namespace EMG_Logger
             ARDisconnect.Enabled = false;
             serialPort1.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(DataReceived);
             serialPort2.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(DataReceived);
+           
 
         }
 
@@ -78,9 +82,17 @@ namespace EMG_Logger
             }
             else
             {
-                in_data = serialPort1.ReadLine();
-                this.Invoke(new EventHandler(display_event));
-              
+                try
+                {
+                    in_data = serialPort1.ReadLine();
+                    if (recieve_data)
+                        this.Invoke(new EventHandler(StartButton_Click));
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("The last line of the CSV file may be missing.");
+                }
+
             }
         }
 
@@ -88,15 +100,38 @@ namespace EMG_Logger
         {
             datetime = DateTime.Now;
             string time = datetime.Hour + ":" + datetime.Minute + ":" + datetime.Second;
-            // if(in_data == "6")
+            Pdata.AppendText(time + "\t\t" + in_data + "\n");
+
+            //  if(in_data == "6")
             // {
-            //   Pdata.Text = time + "\t\t" + "Point" + "\n";
-            // }
-            // else if(in_data == "7")
+            // Pdata.Text = time + "\t\t" + "Point" + "\n";
+            //}
+            //else if(in_data == "7")
+            //{
+            //Pdata.Text = time + "\t\t" + "Okay" + "\n";
+            //}
+            //else
+            //{
+            //  Pdata.Text = time + "\t\t" + "Okay" + "\n";
+            //}
+
+            //  Dictionary<string, string> my_dict = new Dictionary<string, string>();
+
+            //my_dict.Add("1", "fist");
+            //my_dict.Add("2", "rest");
+            //my_dict.Add("3", "open hand");
+            //my_dict.Add("4", "wave in");
+            //my_dict.Add("5", "wave out");
+            //my_dict.Add("6", "point");
+            //my_dict.Add("7", "okay");
+            //if(my_dict.ContainsKey(in_data) == true)
             // {
-            //   Pdata.Text = time + "\t\t" + "Okay" + "\n";
+
             // }
-            Pdata.Text = time + "\t\t" + in_data + "\n";
+
+
+
+
             outdata = in_data;
         }
 
@@ -139,7 +174,7 @@ namespace EMG_Logger
                     button2.Enabled = true;
                     button3.Enabled = true;
                     textBox1.Enabled = true;
-                    StartButton.Enabled = false;
+                    StartButton.Enabled = true;
                 }
             }
             catch(UnauthorizedAccessException)
@@ -298,18 +333,18 @@ namespace EMG_Logger
 
         private void StartButton_Click(object sender, EventArgs e)
         {
-            
             try
             {
-                serialPort1.Open();
-                serialPort2.Open();
-                Pdata.Text = "";
+                if (!serialPort1.IsOpen)
+                    serialPort1.Open();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error");
+                textBox1.Text = "Error";
             }
             
+            Pdata.Text = " ";
+            this.Invoke(new EventHandler(display_event));
 
         }
 
