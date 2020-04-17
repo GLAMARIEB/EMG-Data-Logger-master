@@ -43,8 +43,6 @@ namespace EMG_Logger
             button3.Enabled = false;
             button4.Visible = false;
             StartButton.Enabled = false;
-            ARConnect.Enabled = true;
-            ARDisconnect.Enabled = false;
             serialPort1.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(DataReceived);
             serialPort2.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(DataReceived);
            
@@ -80,19 +78,23 @@ namespace EMG_Logger
                     MessageBox.Show("The last line of the CSV file may be missing.");
                 }
             }
+            
             else
             {
                 try
                 {
                     in_data = serialPort1.ReadLine();
+                    outdata = serialPort2.ReadLine();
                     if (recieve_data)
                         this.Invoke(new EventHandler(StartButton_Click));
+                        //this.Invoke(new EventHandler(display_event));
+                         //outdata = in_data;
+
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("The last line of the CSV file may be missing.");
+                    MessageBox.Show("Data Not Recieved");
                 }
-
             }
         }
 
@@ -100,7 +102,9 @@ namespace EMG_Logger
         {
             datetime = DateTime.Now;
             string time = datetime.Hour + ":" + datetime.Minute + ":" + datetime.Second;
+
             Pdata.AppendText(time + "\t\t" + in_data + "\n");
+            Arduino.Text= outdata;
 
             //  if(in_data == "6")
             // {
@@ -128,11 +132,6 @@ namespace EMG_Logger
             // {
 
             // }
-
-
-
-
-            outdata = in_data;
         }
 
 
@@ -144,18 +143,26 @@ namespace EMG_Logger
             // Connect to COM Port
             try
             {
-                if (comboBox1.Text == "" || comboBox2.Text == "")
+                if (comboBox1.Text == "" || comboBox2.Text == "" || comboBox3.Text == "" || comboBox4.Text == "")
                 {
                     textBox1.Text = "Please select port settings.";
                 }
                 else
                 {
-                    // Setup settings for the serial port
+                    // Setup settings for the serial port1
                     serialPort1.PortName = comboBox1.Text;
                     serialPort1.BaudRate = Convert.ToInt32(comboBox2.Text);
                     serialPort1.Parity = Parity.None;
                     serialPort1.StopBits = StopBits.One;
                     serialPort1.DataBits = 8;
+
+                    //Setup settings for the serial port2
+                    serialPort2.PortName = comboBox3.Text;
+                    serialPort2.BaudRate = Convert.ToInt32(comboBox4.Text);
+                    serialPort2.Parity = Parity.None;
+                    serialPort2.StopBits = StopBits.One;
+                    serialPort2.DataBits = 8;
+
                     try
                     {
                         if (!serialPort1.IsOpen)
@@ -165,6 +172,18 @@ namespace EMG_Logger
                     {
                         textBox1.Text = "Error";
                     }
+
+                    try
+                    {
+                        if (serialPort2.IsOpen)
+                            serialPort2.Open();
+                            textBox1.Text = "connecting to Arduino";
+                    }
+                    catch (Exception ex)
+                    {
+                        textBox1.Text = ("Error connecting to Arduino");
+                    }
+                 
 
                     // Setup timer
                     timer1.Interval = 275;
@@ -335,71 +354,44 @@ namespace EMG_Logger
         {
             try
             {
-                if (!serialPort1.IsOpen)
-                    serialPort1.Open();
-            }
-            catch (Exception ex)
-            {
-                textBox1.Text = "Error";
-            }
-            
-            Pdata.Text = " ";
-            this.Invoke(new EventHandler(display_event));
 
-        }
-
-
-        //Connecting to Arduino
-        private void ARConnect_Click(object sender, EventArgs e)
-        {
-
-            try
-            {
-                if (comboBox3.Text == "" || comboBox4.Text == "")
-                {
-                    textBox1.Text = "Please select port settings.";
-                }
-                else
-                {
-                    // Setup settings for the serial port
-                    serialPort2.PortName = comboBox1.Text;
-                    serialPort2.BaudRate = Convert.ToInt32(comboBox4.Text);
-                    serialPort2.Parity = Parity.None;
-                    serialPort2.StopBits = StopBits.One;
-                    serialPort2.DataBits = 8;
-                    try
+                serialPort1.DataReceived += DataReceived;
+                try
                     {
-                        if (!serialPort2.IsOpen)
-                            serialPort2.Open();
-                    }
-                    catch (Exception ex)
-                    {
-                        textBox1.Text = "Error";
-                    }
+                        if (!serialPort1.IsOpen)
+                            serialPort1.Open();
 
-                    // Setup timer
-                    timer1.Interval = 275;
-
-                    // Change button access
-                    button1.Enabled = false;
-                    button2.Enabled = false;
-                    button3.Enabled = false;
-                    textBox1.Enabled = true;
-                    StartButton.Enabled = false;
-                    ARConnect.Enabled = false;
-                    ARDisconnect.Enabled = true;
                 }
+                catch (Exception ex)
+                {
+                     textBox1.Text = "Error";
+                }
+
+
+                serialPort2.DataReceived += DataReceived;
+                try
+                {
+                    if (!serialPort2.IsOpen)
+                        serialPort2.Open();
+
+                }
+                catch (Exception ex)
+                {
+                    textBox1.Text = "Error";
+                }
+                
+                Pdata.Text = " ";
+                Arduino.Text = " ";
+                this.Invoke(new EventHandler(display_event));
+
+
             }
             catch (UnauthorizedAccessException)
             {
                 textBox1.Text = "Unauthorized Access";
             }
-        }
+            
 
-        private void ARDisconnect_Click(object sender, EventArgs e)
-        {
-            serialPort2.Close();
         }
-
     }
 }
