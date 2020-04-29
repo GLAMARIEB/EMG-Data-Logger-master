@@ -56,23 +56,22 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.StartButton = new System.Windows.Forms.Button();
             this.Pdata = new System.Windows.Forms.TextBox();
             this.serialPort2 = new System.IO.Ports.SerialPort(this.components);
-            this.label14 = new System.Windows.Forms.Label();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
-            this.Arduino = new System.Windows.Forms.TextBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.BaudRate_cb = new System.Windows.Forms.ComboBox();
+            this.ArdComPort_cb = new System.Windows.Forms.ComboBox();
+            this.Disconnect_Arduino = new System.Windows.Forms.Button();
+            this.Connect_Arduino = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.PredictionBox.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.comboBox4);
-            this.groupBox1.Controls.Add(this.comboBox3);
-            this.groupBox1.Controls.Add(this.label14);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.textBox2);
             this.groupBox1.Controls.Add(this.button4);
@@ -94,7 +93,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(5, 131);
+            this.label1.Location = new System.Drawing.Point(5, 90);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(140, 20);
@@ -103,7 +102,7 @@
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(6, 153);
+            this.textBox2.Location = new System.Drawing.Point(6, 117);
             this.textBox2.Margin = new System.Windows.Forms.Padding(1);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(351, 26);
@@ -137,10 +136,10 @@
             this.comboBox2.Items.AddRange(new object[] {
             "9600",
             "115200"});
-            this.comboBox2.Location = new System.Drawing.Point(232, 39);
+            this.comboBox2.Location = new System.Drawing.Point(178, 39);
             this.comboBox2.Margin = new System.Windows.Forms.Padding(1);
             this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(137, 28);
+            this.comboBox2.Size = new System.Drawing.Size(175, 28);
             this.comboBox2.TabIndex = 3;
             // 
             // button2
@@ -168,7 +167,7 @@
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(19, 42);
+            this.comboBox1.Location = new System.Drawing.Point(9, 39);
             this.comboBox1.Margin = new System.Windows.Forms.Padding(1);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(152, 28);
@@ -278,7 +277,6 @@
             this.PredictionBox.Controls.Add(this.label9);
             this.PredictionBox.Controls.Add(this.label8);
             this.PredictionBox.Controls.Add(this.label7);
-            this.PredictionBox.Controls.Add(this.StartButton);
             this.PredictionBox.Controls.Add(this.Pdata);
             this.PredictionBox.Location = new System.Drawing.Point(35, 449);
             this.PredictionBox.Name = "PredictionBox";
@@ -357,16 +355,6 @@
             this.label7.TabIndex = 2;
             this.label7.Text = "1 = Fist";
             // 
-            // StartButton
-            // 
-            this.StartButton.Location = new System.Drawing.Point(378, 31);
-            this.StartButton.Name = "StartButton";
-            this.StartButton.Size = new System.Drawing.Size(116, 50);
-            this.StartButton.TabIndex = 1;
-            this.StartButton.Text = "Start";
-            this.StartButton.UseVisualStyleBackColor = true;
-            this.StartButton.Click += new System.EventHandler(this.StartButton_Click);
-            // 
             // Pdata
             // 
             this.Pdata.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
@@ -376,47 +364,77 @@
             this.Pdata.Size = new System.Drawing.Size(347, 212);
             this.Pdata.TabIndex = 0;
             // 
-            // label14
+            // groupBox3
             // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(15, 76);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(152, 20);
-            this.label14.TabIndex = 8;
-            this.label14.Text = "Connect to Arduino";
+            this.groupBox3.Controls.Add(this.textBox3);
+            this.groupBox3.Controls.Add(this.BaudRate_cb);
+            this.groupBox3.Controls.Add(this.ArdComPort_cb);
+            this.groupBox3.Controls.Add(this.Disconnect_Arduino);
+            this.groupBox3.Controls.Add(this.Connect_Arduino);
+            this.groupBox3.Location = new System.Drawing.Point(633, 461);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(334, 272);
+            this.groupBox3.TabIndex = 6;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Connect to Arduino";
             // 
-            // comboBox3
+            // textBox3
             // 
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(19, 99);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(152, 28);
-            this.comboBox3.TabIndex = 9;
+            this.textBox3.Location = new System.Drawing.Point(19, 130);
+            this.textBox3.Multiline = true;
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(135, 127);
+            this.textBox3.TabIndex = 6;
             // 
-            // comboBox4
+            // BaudRate_cb
             // 
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Items.AddRange(new object[] {
-            "9600"});
-            this.comboBox4.Location = new System.Drawing.Point(232, 99);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(152, 28);
-            this.comboBox4.TabIndex = 10;
+            this.BaudRate_cb.FormattingEnabled = true;
+            this.BaudRate_cb.Items.AddRange(new object[] {
+            "9600",
+            "115200"});
+            this.BaudRate_cb.Location = new System.Drawing.Point(22, 84);
+            this.BaudRate_cb.Margin = new System.Windows.Forms.Padding(1);
+            this.BaudRate_cb.Name = "BaudRate_cb";
+            this.BaudRate_cb.Size = new System.Drawing.Size(152, 24);
+            this.BaudRate_cb.TabIndex = 5;
             // 
-            // Arduino
+            // ArdComPort_cb
             // 
-            this.Arduino.Location = new System.Drawing.Point(651, 466);
-            this.Arduino.Multiline = true;
-            this.Arduino.Name = "Arduino";
-            this.Arduino.Size = new System.Drawing.Size(311, 257);
-            this.Arduino.TabIndex = 11;
+            this.ArdComPort_cb.FormattingEnabled = true;
+            this.ArdComPort_cb.Location = new System.Drawing.Point(22, 45);
+            this.ArdComPort_cb.Margin = new System.Windows.Forms.Padding(1);
+            this.ArdComPort_cb.Name = "ArdComPort_cb";
+            this.ArdComPort_cb.Size = new System.Drawing.Size(152, 24);
+            this.ArdComPort_cb.TabIndex = 4;
+            // 
+            // Disconnect_Arduino
+            // 
+            this.Disconnect_Arduino.Location = new System.Drawing.Point(176, 200);
+            this.Disconnect_Arduino.Margin = new System.Windows.Forms.Padding(1);
+            this.Disconnect_Arduino.Name = "Disconnect_Arduino";
+            this.Disconnect_Arduino.Size = new System.Drawing.Size(137, 57);
+            this.Disconnect_Arduino.TabIndex = 3;
+            this.Disconnect_Arduino.Text = "Disconnect";
+            this.Disconnect_Arduino.UseVisualStyleBackColor = true;
+            this.Disconnect_Arduino.Click += new System.EventHandler(this.Disconnect_Arduino_Click);
+            // 
+            // Connect_Arduino
+            // 
+            this.Connect_Arduino.Location = new System.Drawing.Point(176, 129);
+            this.Connect_Arduino.Margin = new System.Windows.Forms.Padding(1);
+            this.Connect_Arduino.Name = "Connect_Arduino";
+            this.Connect_Arduino.Size = new System.Drawing.Size(137, 57);
+            this.Connect_Arduino.TabIndex = 2;
+            this.Connect_Arduino.Text = "Connect";
+            this.Connect_Arduino.UseVisualStyleBackColor = true;
+            this.Connect_Arduino.Click += new System.EventHandler(this.Connect_Arduino_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1176, 772);
-            this.Controls.Add(this.Arduino);
+            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.PredictionBox);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.textBox1);
@@ -431,6 +449,8 @@
             this.groupBox2.PerformLayout();
             this.PredictionBox.ResumeLayout(false);
             this.PredictionBox.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -458,7 +478,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.GroupBox PredictionBox;
-        private System.Windows.Forms.Button StartButton;
         private System.Windows.Forms.TextBox Pdata;
         private System.IO.Ports.SerialPort serialPort2;
         private System.Windows.Forms.Label label13;
@@ -468,10 +487,12 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.ComboBox comboBox4;
-        private System.Windows.Forms.ComboBox comboBox3;
-        private System.Windows.Forms.TextBox Arduino;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.ComboBox BaudRate_cb;
+        private System.Windows.Forms.ComboBox ArdComPort_cb;
+        private System.Windows.Forms.Button Disconnect_Arduino;
+        private System.Windows.Forms.Button Connect_Arduino;
+        private System.Windows.Forms.TextBox textBox3;
     }
 }
 

@@ -18,36 +18,37 @@ namespace EMG_Logger
     {
         string path = System.Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\DataSync_JP\\DefaultNoNameOutputFile.csv";
         string FilePath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\DataSync_JP\\";
-        private DateTime datetime;
+      
 
         StreamWriter sw;
         bool logging_data = false;
-        bool recieve_data = false;
-        string temp = null;
-        string in_data;
-        string outdata;
        
-
-
-
+        string temp = null;
+        string in_data;        //data going in from tiva
         int _hours = 0;
         int _minutes = 0;
         int _seconds = 0;
+
+        int value;
+        string data_value;
+        bool recieve = false;
+      
 
         public Form1()
         {
             InitializeComponent();
             getAvailablePorts();
+           
             button1.Enabled = true;
             button2.Enabled = false;
             button3.Enabled = false;
             button4.Visible = false;
-            StartButton.Enabled = false;
-            serialPort1.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(DataReceived);
-            serialPort2.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(DataReceived);
-           
+            //StartButton.Enabled = false;
+            serialPort1.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(DataReceived);  
 
         }
+
+
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -59,7 +60,9 @@ namespace EMG_Logger
             // Get the available COM Ports and put them in the ComboBox1
             String[] ports = SerialPort.GetPortNames();
             comboBox1.Items.AddRange(ports);
-            comboBox3.Items.AddRange(ports);
+            ArdComPort_cb.Items.AddRange(ports);
+           
+        
 
         }
 
@@ -75,7 +78,7 @@ namespace EMG_Logger
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("The last line of the CSV file may be missing.");
+                    MessageBox.Show("The last line of the CSV file may be missing."); 
                 }
             }
             
@@ -84,54 +87,21 @@ namespace EMG_Logger
                 try
                 {
                     in_data = serialPort1.ReadLine();
-                    outdata = serialPort2.ReadLine();
-                    if (recieve_data)
-                        this.Invoke(new EventHandler(StartButton_Click));
-                        //this.Invoke(new EventHandler(display_event));
-                         //outdata = in_data;
+                    //this.Invoke(new EventHandler(StartButton_Click));
+                    this.Invoke(new EventHandler(display_event));
+                    
 
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Data Not Recieved");
+                    MessageBox.Show("Data Not Recieved"); 
                 }
             }
         }
 
         private void display_event(object sender, EventArgs e)
         {
-            datetime = DateTime.Now;
-            string time = datetime.Hour + ":" + datetime.Minute + ":" + datetime.Second;
-
-            Pdata.AppendText(time + "\t\t" + in_data + "\n");
-            Arduino.Text= outdata;
-
-            //  if(in_data == "6")
-            // {
-            // Pdata.Text = time + "\t\t" + "Point" + "\n";
-            //}
-            //else if(in_data == "7")
-            //{
-            //Pdata.Text = time + "\t\t" + "Okay" + "\n";
-            //}
-            //else
-            //{
-            //  Pdata.Text = time + "\t\t" + "Okay" + "\n";
-            //}
-
-            //  Dictionary<string, string> my_dict = new Dictionary<string, string>();
-
-            //my_dict.Add("1", "fist");
-            //my_dict.Add("2", "rest");
-            //my_dict.Add("3", "open hand");
-            //my_dict.Add("4", "wave in");
-            //my_dict.Add("5", "wave out");
-            //my_dict.Add("6", "point");
-            //my_dict.Add("7", "okay");
-            //if(my_dict.ContainsKey(in_data) == true)
-            // {
-
-            // }
+            Pdata.Text = in_data;
         }
 
 
@@ -143,7 +113,7 @@ namespace EMG_Logger
             // Connect to COM Port
             try
             {
-                if (comboBox1.Text == "" || comboBox2.Text == "" || comboBox3.Text == "" || comboBox4.Text == "")
+                if (comboBox1.Text == "" || comboBox2.Text == "")
                 {
                     textBox1.Text = "Please select port settings.";
                 }
@@ -156,12 +126,7 @@ namespace EMG_Logger
                     serialPort1.StopBits = StopBits.One;
                     serialPort1.DataBits = 8;
 
-                    //Setup settings for the serial port2
-                    serialPort2.PortName = comboBox3.Text;
-                    serialPort2.BaudRate = Convert.ToInt32(comboBox4.Text);
-                    serialPort2.Parity = Parity.None;
-                    serialPort2.StopBits = StopBits.One;
-                    serialPort2.DataBits = 8;
+                  
 
                     try
                     {
@@ -173,16 +138,7 @@ namespace EMG_Logger
                         textBox1.Text = "Error";
                     }
 
-                    try
-                    {
-                        if (serialPort2.IsOpen)
-                            serialPort2.Open();
-                            textBox1.Text = "connecting to Arduino";
-                    }
-                    catch (Exception ex)
-                    {
-                        textBox1.Text = ("Error connecting to Arduino");
-                    }
+                   
                  
 
                     // Setup timer
@@ -193,7 +149,7 @@ namespace EMG_Logger
                     button2.Enabled = true;
                     button3.Enabled = true;
                     textBox1.Enabled = true;
-                    StartButton.Enabled = true;
+                   // StartButton.Enabled = true;
                 }
             }
             catch(UnauthorizedAccessException)
@@ -202,7 +158,8 @@ namespace EMG_Logger
             }
 
         }
-
+       
+        //Disconnect from Tiva
         private void button2_Click(object sender, EventArgs e)
         {
             // Disconnect from COM Port
@@ -221,6 +178,65 @@ namespace EMG_Logger
 
             }
         }
+
+        //Connect to Arduino
+        private void Connect_Arduino_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (ArdComPort_cb.Text == "" || BaudRate_cb.Text == "")
+                {
+                    textBox3.Text = "Please select port settings.";
+                }
+                else
+                {
+                    // Setup settings for the serial port2
+                    serialPort2.PortName = ArdComPort_cb.Text;
+                    serialPort2.BaudRate = Convert.ToInt32(BaudRate_cb.Text);
+                    serialPort2.Parity = Parity.None;
+                    serialPort2.StopBits = StopBits.One;
+                    serialPort2.DataBits = 8;
+
+
+
+                    try
+                    {
+                        if (!serialPort2.IsOpen)
+                        {
+                            serialPort2.Open();
+                            textBox3.Text = "connected to Arduino.";
+                            serialPort2.Write(Pdata.Text);  //sending string from Prediction box.
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        textBox3.Text = "Error Connecting to Arduino";
+                    }
+
+                }
+            }
+            catch (UnauthorizedAccessException)
+            {
+                textBox3.Text = "Unauthorized Access";
+            }
+        }
+
+        //Disconnect from Arduino
+        private void Disconnect_Arduino_Click(object sender, EventArgs e)
+        {
+            // Disconnect from COM Port
+            serialPort2.Close();
+            try
+            {
+                sw.Close();
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+      
 
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -350,48 +366,8 @@ namespace EMG_Logger
             _hours++;
         }
 
-        private void StartButton_Click(object sender, EventArgs e)
-        {
-            try
-            {
+      
 
-                serialPort1.DataReceived += DataReceived;
-                try
-                    {
-                        if (!serialPort1.IsOpen)
-                            serialPort1.Open();
-
-                }
-                catch (Exception ex)
-                {
-                     textBox1.Text = "Error";
-                }
-
-
-                serialPort2.DataReceived += DataReceived;
-                try
-                {
-                    if (!serialPort2.IsOpen)
-                        serialPort2.Open();
-
-                }
-                catch (Exception ex)
-                {
-                    textBox1.Text = "Error";
-                }
-                
-                Pdata.Text = " ";
-                Arduino.Text = " ";
-                this.Invoke(new EventHandler(display_event));
-
-
-            }
-            catch (UnauthorizedAccessException)
-            {
-                textBox1.Text = "Unauthorized Access";
-            }
-            
-
-        }
+       
     }
 }
