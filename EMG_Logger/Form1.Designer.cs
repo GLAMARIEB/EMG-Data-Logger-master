@@ -64,6 +64,7 @@
             this.ArdComPort_cb = new System.Windows.Forms.ComboBox();
             this.Disconnect_Arduino = new System.Windows.Forms.Button();
             this.Connect_Arduino = new System.Windows.Forms.Button();
+            this.btnSend = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.PredictionBox.SuspendLayout();
@@ -270,6 +271,7 @@
             // 
             // PredictionBox
             // 
+            this.PredictionBox.Controls.Add(this.btnSend);
             this.PredictionBox.Controls.Add(this.label13);
             this.PredictionBox.Controls.Add(this.label12);
             this.PredictionBox.Controls.Add(this.label11);
@@ -429,6 +431,16 @@
             this.Connect_Arduino.UseVisualStyleBackColor = true;
             this.Connect_Arduino.Click += new System.EventHandler(this.Connect_Arduino_Click);
             // 
+            // btnSend
+            // 
+            this.btnSend.Location = new System.Drawing.Point(469, 44);
+            this.btnSend.Name = "btnSend";
+            this.btnSend.Size = new System.Drawing.Size(108, 52);
+            this.btnSend.TabIndex = 9;
+            this.btnSend.Text = "Send";
+            this.btnSend.UseVisualStyleBackColor = true;
+            this.btnSend.Click += new System.EventHandler(this.BtnSend_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -493,6 +505,7 @@
         private System.Windows.Forms.Button Disconnect_Arduino;
         private System.Windows.Forms.Button Connect_Arduino;
         private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.Button btnSend;
     }
 }
 

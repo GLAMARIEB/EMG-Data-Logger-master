@@ -43,7 +43,9 @@ namespace EMG_Logger
             button2.Enabled = false;
             button3.Enabled = false;
             button4.Visible = false;
-            //StartButton.Enabled = false;
+            btnSend.Enabled = false;
+            Connect_Arduino.Enabled = true;
+            Disconnect_Arduino.Enabled = false;
             serialPort1.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(DataReceived);  
 
         }
@@ -87,10 +89,7 @@ namespace EMG_Logger
                 try
                 {
                     in_data = serialPort1.ReadLine();
-                    //this.Invoke(new EventHandler(StartButton_Click));
                     this.Invoke(new EventHandler(display_event));
-                    
-
                 }
                 catch (Exception ex)
                 {
@@ -103,8 +102,6 @@ namespace EMG_Logger
         {
             Pdata.Text = in_data;
         }
-
-
 
 
         //Connect to Tiva
@@ -148,8 +145,10 @@ namespace EMG_Logger
                     button1.Enabled = false;
                     button2.Enabled = true;
                     button3.Enabled = true;
+                    btnSend.Enabled = true;
                     textBox1.Enabled = true;
-                   // StartButton.Enabled = true;
+                    Pdata.Enabled = true;
+                   
                 }
             }
             catch(UnauthorizedAccessException)
@@ -205,14 +204,20 @@ namespace EMG_Logger
                         {
                             serialPort2.Open();
                             textBox3.Text = "connected to Arduino.";
-                            serialPort2.Write(Pdata.Text);  //sending string from Prediction box.
+                            
                         }
                     }
                     catch (Exception ex)
                     {
                         textBox3.Text = "Error Connecting to Arduino";
                     }
-
+                    Connect_Arduino.Enabled = false;
+                    Disconnect_Arduino.Enabled = true;
+                    button1.Enabled = true;
+                    button2.Enabled = true;
+                    btnSend.Enabled = true;
+                    textBox3.Enabled = true;
+                    Pdata.Enabled = true;
                 }
             }
             catch (UnauthorizedAccessException)
@@ -226,6 +231,13 @@ namespace EMG_Logger
         {
             // Disconnect from COM Port
             serialPort2.Close();
+            button1.Enabled = true;
+            button2.Enabled = false;
+            button3.Enabled = false;
+            button4.Enabled = false;
+            btnSend.Enabled = false;
+            Connect_Arduino.Enabled = true;
+            Disconnect_Arduino.Enabled = false;
             try
             {
                 sw.Close();
@@ -235,8 +247,6 @@ namespace EMG_Logger
 
             }
         }
-
-      
 
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -366,8 +376,10 @@ namespace EMG_Logger
             _hours++;
         }
 
-      
-
-       
+        private void BtnSend_Click(object sender, EventArgs e)
+        {
+            Pdata.Text = in_data;
+            serialPort2.Write(Pdata.Text);  //sending string from Prediction box to arduino comport.
+        }
     }
 }
