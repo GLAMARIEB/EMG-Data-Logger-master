@@ -49,6 +49,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.PredictionBox = new System.Windows.Forms.GroupBox();
+            this.btnSend = new System.Windows.Forms.Button();
             this.label13 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
@@ -64,7 +65,7 @@
             this.ArdComPort_cb = new System.Windows.Forms.ComboBox();
             this.Disconnect_Arduino = new System.Windows.Forms.Button();
             this.Connect_Arduino = new System.Windows.Forms.Button();
-            this.btnSend = new System.Windows.Forms.Button();
+            this.timer3 = new System.Windows.Forms.Timer(this.components);
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.PredictionBox.SuspendLayout();
@@ -287,6 +288,16 @@
             this.PredictionBox.TabStop = false;
             this.PredictionBox.Text = "Prediction";
             // 
+            // btnSend
+            // 
+            this.btnSend.Location = new System.Drawing.Point(469, 44);
+            this.btnSend.Name = "btnSend";
+            this.btnSend.Size = new System.Drawing.Size(108, 52);
+            this.btnSend.TabIndex = 9;
+            this.btnSend.Text = "Send";
+            this.btnSend.UseVisualStyleBackColor = true;
+            this.btnSend.Click += new System.EventHandler(this.BtnSend_Click);
+            // 
             // label13
             // 
             this.label13.AutoSize = true;
@@ -431,15 +442,10 @@
             this.Connect_Arduino.UseVisualStyleBackColor = true;
             this.Connect_Arduino.Click += new System.EventHandler(this.Connect_Arduino_Click);
             // 
-            // btnSend
+            // timer3
             // 
-            this.btnSend.Location = new System.Drawing.Point(469, 44);
-            this.btnSend.Name = "btnSend";
-            this.btnSend.Size = new System.Drawing.Size(108, 52);
-            this.btnSend.TabIndex = 9;
-            this.btnSend.Text = "Send";
-            this.btnSend.UseVisualStyleBackColor = true;
-            this.btnSend.Click += new System.EventHandler(this.BtnSend_Click);
+            this.timer3.Interval = 2000;
+            this.timer3.Tick += new System.EventHandler(this.Timer3_Tick);
             // 
             // Form1
             // 
@@ -506,6 +512,7 @@
         private System.Windows.Forms.Button Connect_Arduino;
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Button btnSend;
+        private System.Windows.Forms.Timer timer3;
     }
 }
 
