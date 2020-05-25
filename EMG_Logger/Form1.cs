@@ -211,7 +211,7 @@ namespace EMG_Logger
                     {
                         textBox3.Text = "Error Connecting to Arduino";
                     }
-                    timer3.Start();
+                   
                     Connect_Arduino.Enabled = false;
                     Disconnect_Arduino.Enabled = true;
                     button1.Enabled = true;
@@ -385,9 +385,8 @@ namespace EMG_Logger
 
         private void Timer3_Tick(object sender, EventArgs e)
         {
-            timer3.Enabled = true;
-            Pdata.Text = in_data;
-            serialPort2.Write(Pdata.Text); //sends data predictions to arduino every 2 seconds
+           // Pdata.Text = in_data;
+           // serialPort2.Write(Pdata.Text);  //sending string from Prediction box to arduino comport.
         }
     }
 }
